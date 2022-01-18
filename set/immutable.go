@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-type ImmutableSet[T comparable] map[T]bool
+type ImmutableSet[T comparable] map[T]struct{}
 
 func (s ImmutableSet[T]) Contains(item T) bool {
 	_, ok := s[item]
@@ -22,9 +22,9 @@ func (s ImmutableSet[T]) Add(item T) ImmutableSet[T] {
 	}
 	newset := NewImmutable[T]()
 	for k := range s {
-		newset[k] = true
+		newset[k] = struct{}{}
 	}
-	newset[item] = true
+	newset[item] = struct{}{}
 	return newset
 }
 
@@ -34,7 +34,7 @@ func (s ImmutableSet[T]) Del(item T) ImmutableSet[T] {
 		if k == item {
 			continue
 		}
-		newset[k] = true
+		newset[k] = struct{}{}
 	}
 	return newset
 }

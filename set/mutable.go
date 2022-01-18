@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-type MutableSet[T comparable] map[T]bool
+type MutableSet[T comparable] map[T]struct{}
 
 func (s MutableSet[T]) Contains(item T) bool {
 	_, ok := s[item]
@@ -13,7 +13,7 @@ func (s MutableSet[T]) Contains(item T) bool {
 }
 
 func (s MutableSet[T]) Add(item T) {
-	s[item] = true
+	s[item] = struct{}{}
 }
 
 func (s MutableSet[T]) Del(item T) {
