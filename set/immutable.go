@@ -49,6 +49,16 @@ func (s ImmutableSet[T]) String() string {
 	return fmt.Sprintf("ImmutableSet(%s)", strings.Join(items, ", "))
 }
 
+func (s ImmutableSet[T]) Keys() []T {
+	keys := make([]T, len(s))
+	i := 0
+	for k := range s {
+		keys[i] = k
+		i++
+	}
+	return keys
+}
+
 func NewImmutable[T comparable]() ImmutableSet[T] {
 	return ImmutableSet[T]{}
 }

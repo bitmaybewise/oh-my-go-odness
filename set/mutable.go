@@ -12,16 +12,18 @@ func (s MutableSet[T]) Contains(item T) bool {
 	return ok
 }
 
-func (s MutableSet[T]) Add(item T) {
+func (s MutableSet[T]) Add(item T) MutableSet[T] {
 	s[item] = struct{}{}
+	return s
 }
 
-func (s MutableSet[T]) Del(item T) {
+func (s MutableSet[T]) Del(item T) MutableSet[T] {
 	for k := range s {
 		if k == item {
 			delete(s, k)
 		}
 	}
+	return s
 }
 
 func (s MutableSet[T]) Len() int {
@@ -36,6 +38,16 @@ func (s MutableSet[T]) String() string {
 		i++
 	}
 	return fmt.Sprintf("MutableSet(%s)", strings.Join(items, ", "))
+}
+
+func (s MutableSet[T]) Keys() []T {
+	keys := make([]T, len(s))
+	i := 0
+	for k := range s {
+		keys[i] = k
+		i++
+	}
+	return keys
 }
 
 func NewMutable[T comparable]() MutableSet[T] {

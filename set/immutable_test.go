@@ -114,6 +114,15 @@ func Test_ImmutableSet_String(t *testing.T) {
 	}
 }
 
+func Test_ImmutableSet_Keys(t *testing.T) {
+	input := []string{"abc", "efg", "hijk"}
+	set := NewImmutableWith(input...)
+
+	if len(set.Keys()) != len(input) {
+		t.Errorf("keys expected %s, got %s", input, set.Keys())
+	}
+}
+
 func Test_ImmutableSet_NewImmutableWith(t *testing.T) {
 	input := []string{"abc", "efg", "hijk"}
 	set := NewImmutableWith(input...)

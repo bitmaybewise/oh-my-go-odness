@@ -71,12 +71,8 @@ func Test_MutableSet_Del(t *testing.T) {
 }
 
 func Test_MutableSet_String(t *testing.T) {
-	set := NewMutable[string]()
 	input := []string{"abc", "efg", "hijk"}
-
-	for _, val := range input {
-		set.Add(val)
-	}
+	set := NewMutableWith(input...)
 
 	expectedPattern := `MutableSet(.+, .+, .+)`
 	matched, err := regexp.MatchString(expectedPattern, set.String())
@@ -85,6 +81,15 @@ func Test_MutableSet_String(t *testing.T) {
 	}
 	if !matched {
 		t.Errorf("string expected to match the pattern %q, got %q", set.String(), expectedPattern)
+	}
+}
+
+func Test_MutableSet_Keys(t *testing.T) {
+	input := []string{"abc", "efg", "hijk"}
+	set := NewMutableWith(input...)
+
+	if len(set.Keys()) != len(input) {
+		t.Errorf("keys expected %s, got %s", input, set.Keys())
 	}
 }
 
