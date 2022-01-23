@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func Test_Immutable_Contains(t *testing.T) {
+func Test_ImmutableSet_Contains(t *testing.T) {
 	originalSet := NewImmutable[string]()
 
 	set := originalSet
@@ -28,7 +28,7 @@ func Test_Immutable_Contains(t *testing.T) {
 	}
 }
 
-func Test_Immutable_Len(t *testing.T) {
+func Test_ImmutableSet_Len(t *testing.T) {
 	originalSet := NewImmutable[string]()
 
 	set := originalSet
@@ -45,7 +45,7 @@ func Test_Immutable_Len(t *testing.T) {
 	}
 }
 
-func Test_Immutable_Add(t *testing.T) {
+func Test_ImmutableSet_Add(t *testing.T) {
 	originalSet := NewImmutable[string]()
 
 	set := originalSet
@@ -73,7 +73,7 @@ func Test_Immutable_Add(t *testing.T) {
 	}
 }
 
-func Test_Immutable_Del(t *testing.T) {
+func Test_ImmutableSet_Del(t *testing.T) {
 	originalSet := NewImmutable[string]()
 
 	set := originalSet
@@ -96,13 +96,27 @@ func Test_Immutable_Del(t *testing.T) {
 	}
 }
 
-func Test_Immutable_String(t *testing.T) {
+func Test_ImmutableSet_String(t *testing.T) {
 	set := NewImmutable[string]()
 	input := []string{"abc", "efg", "hijk"}
 
 	for _, val := range input {
 		set = set.Add(val)
 	}
+
+	expectedPattern := `ImmutableSet(.+, .+, .+)`
+	matched, err := regexp.MatchString(expectedPattern, set.String())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !matched {
+		t.Errorf("string expected to match the pattern %q, got %q", set.String(), expectedPattern)
+	}
+}
+
+func Test_ImmutableSet_NewImmutableWith(t *testing.T) {
+	input := []string{"abc", "efg", "hijk"}
+	set := NewImmutableWith(input...)
 
 	expectedPattern := `ImmutableSet(.+, .+, .+)`
 	matched, err := regexp.MatchString(expectedPattern, set.String())

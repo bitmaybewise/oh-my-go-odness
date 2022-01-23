@@ -52,3 +52,11 @@ func (s ImmutableSet[T]) String() string {
 func NewImmutable[T comparable]() ImmutableSet[T] {
 	return ImmutableSet[T]{}
 }
+
+func NewImmutableWith[T comparable](values ...T) ImmutableSet[T] {
+	set := NewImmutable[T]()
+	for _, val := range values {
+		set = set.Add(val)
+	}
+	return set
+}

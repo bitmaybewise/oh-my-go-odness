@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func Test_Mutable_Contains(t *testing.T) {
+func Test_MutableSet_Contains(t *testing.T) {
 	set := NewMutable[string]()
 	input := []string{"abc", "efg"}
 	for _, val := range input {
@@ -19,7 +19,7 @@ func Test_Mutable_Contains(t *testing.T) {
 	}
 }
 
-func Test_Mutable_Len(t *testing.T) {
+func Test_MutableSet_Len(t *testing.T) {
 	set := NewMutable[string]()
 	input := []string{"abc", "efg"}
 	for _, val := range input {
@@ -30,7 +30,7 @@ func Test_Mutable_Len(t *testing.T) {
 	}
 }
 
-func Test_Mutable_Add(t *testing.T) {
+func Test_MutableSet_Add(t *testing.T) {
 	set := NewMutable[string]()
 	input := []string{"abc", "efg"}
 
@@ -53,7 +53,7 @@ func Test_Mutable_Add(t *testing.T) {
 	}
 }
 
-func Test_Mutable_Del(t *testing.T) {
+func Test_MutableSet_Del(t *testing.T) {
 	set := NewMutable[string]()
 	input := []string{"abc", "efg", "hijk"}
 
@@ -70,13 +70,27 @@ func Test_Mutable_Del(t *testing.T) {
 	}
 }
 
-func Test_Mutable_String(t *testing.T) {
+func Test_MutableSet_String(t *testing.T) {
 	set := NewMutable[string]()
 	input := []string{"abc", "efg", "hijk"}
 
 	for _, val := range input {
 		set.Add(val)
 	}
+
+	expectedPattern := `MutableSet(.+, .+, .+)`
+	matched, err := regexp.MatchString(expectedPattern, set.String())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !matched {
+		t.Errorf("string expected to match the pattern %q, got %q", set.String(), expectedPattern)
+	}
+}
+
+func Test_MutableSet_NewMutableWith(t *testing.T) {
+	input := []string{"abc", "efg", "hijk"}
+	set := NewMutableWith(input...)
 
 	expectedPattern := `MutableSet(.+, .+, .+)`
 	matched, err := regexp.MatchString(expectedPattern, set.String())

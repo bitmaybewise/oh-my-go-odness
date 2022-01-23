@@ -41,3 +41,11 @@ func (s MutableSet[T]) String() string {
 func NewMutable[T comparable]() MutableSet[T] {
 	return MutableSet[T]{}
 }
+
+func NewMutableWith[T comparable](values ...T) MutableSet[T] {
+	set := NewMutable[T]()
+	for _, val := range values {
+		set.Add(val)
+	}
+	return set
+}
