@@ -1,4 +1,4 @@
-package list
+package slice
 
 func Reverse[T any](list []T) []T {
 	n := len(list)
@@ -7,4 +7,13 @@ func Reverse[T any](list []T) []T {
 		reversed[n-i-1] = v
 	}
 	return reversed
+}
+
+func Includes[T comparable](slice []T, value T) bool {
+	for _, it := range slice {
+		if it == value {
+			return true
+		}
+	}
+	return false
 }
