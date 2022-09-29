@@ -1,25 +1,21 @@
 package set
 
-type Set[K comparable, V any] interface {
-	~map[K]V
+func Empty[K comparable, V any]() map[K]V {
+	return make(map[K]V)
 }
 
-func Empty[K comparable, S Set[K, struct{}]]() S {
-	return make(map[K]struct{})
-}
-
-func Keys[K comparable, V any, S Set[K, V]](set S) []K {
-	keys := make([]K, len(set))
+func Keys[K comparable, V any](s map[K]V) []K {
+	keys := make([]K, len(s))
 	i := 0
-	for k := range set {
+	for k := range s {
 		keys[i] = k
 		i++
 	}
 	return keys
 }
 
-func Union[K comparable, V any, S Set[K, V]](sets ...S) map[K]struct{} {
-	union := Empty[K]()
+func Union[K comparable, V any](sets ...map[K]V) map[K]struct{} {
+	union := Empty[K, struct{}]()
 	for _, set := range sets {
 		for key := range set {
 			union[key] = struct{}{}
@@ -28,8 +24,8 @@ func Union[K comparable, V any, S Set[K, V]](sets ...S) map[K]struct{} {
 	return union
 }
 
-func Intersection[K comparable, V any, S Set[K, V]](sets ...S) map[K]struct{} {
-	inter := Empty[K]()
+func Intersection[K comparable, V any](sets ...map[K]V) map[K]struct{} {
+	inter := Empty[K, struct{}]()
 
 	if len(sets) == 0 {
 		return inter
